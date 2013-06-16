@@ -23,7 +23,9 @@ default['gnu_parallel']['install_method'] = case node['platform']
                                             when 'debian'
                                               'package'
                                             when 'ubuntu'
-                                              node['platform_version'] >= 12.10 ? 'package' : 'source'
+                                              node['platform_version'].to_f >= 12.10 ? 'package' : 'source'
+                                            else
+                                              'source'
                                             end
 
 default['gnu_parallel']['url'] = 'http://ftp.gnu.org/gnu/parallel'
