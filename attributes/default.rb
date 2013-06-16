@@ -17,14 +17,16 @@
 # limitations under the License.
 #
 
-case node['platform']
-when "mac_os_x"
-  default['gnu_parallel']['install_method'] = 'homebrew'
-else
-  default['gnu_parallel']['install_method'] = 'source'
-end
+default['gnu_parallel']['install_method'] = case node['platform']
+                                            when "mac_os_x"
+                                              'homebrew'
+                                            when 'debian'
+                                              'package'
+                                            when 'ubuntu'
+                                              node['platform_version'] >= 12.10 ? 'package' : 'source'
+                                            end
 
 default['gnu_parallel']['url'] = 'http://ftp.gnu.org/gnu/parallel'
-default['gnu_parallel']['version'] = '20110522'
-default['gnu_parallel']['checksum'] = '2e60c2052af9b49f8e82b5a32e19c6e9af5cb9b8bfd13717dab79a518dc867be'
+default['gnu_parallel']['version'] = '20130522'
+default['gnu_parallel']['checksum'] = 'e9ea6fa2644e8504a85a518edb246783f2ccace58f21d101712b28bf781d7d2b'
 default['gnu_parallel']['configure_options'] = []
